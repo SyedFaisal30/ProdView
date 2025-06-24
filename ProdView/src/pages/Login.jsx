@@ -15,7 +15,7 @@ const Login = () => {
   setError("");
 
   try {
-    const res = await axios.post("https://dummyjson.com/auth/login", {
+    const res = await axios.post(`${import.meta.env.VITE_API}/auth/login`, {
       username,
       password,
     });

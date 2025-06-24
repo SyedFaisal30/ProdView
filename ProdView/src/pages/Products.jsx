@@ -10,7 +10,7 @@ const ProductList = ({ searchQuery, sortOption }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("https://dummyjson.com/products", {
+        const res = await axios.get(`${import.meta.env.VITE_API}/products`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
