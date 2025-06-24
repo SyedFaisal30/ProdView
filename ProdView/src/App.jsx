@@ -1,16 +1,19 @@
-// src/App.jsx
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/header";
 import Footer from "./components/Footer";
 import Login from "./pages/login";
 import ProductList from "./pages/Products";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./routes/routes";
+
 const App = () => {
+  const [searchQuery, setSearchQuery] = useState(""); // ✅ Include searchQuery here
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
-
+      <Header onSearch={(value) => setSearchQuery(value)} />
+      
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
@@ -18,7 +21,7 @@ const App = () => {
           path="/products"
           element={
             <ProtectedRoute>
-              <ProductList />
+              <ProductList searchQuery={searchQuery} />
             </ProtectedRoute>
           }
         />
