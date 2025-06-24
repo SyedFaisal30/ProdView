@@ -8,12 +8,16 @@ import Landing from "./pages/Landing";
 import ProtectedRoute from "./routes/routes";
 
 const App = () => {
-  const [searchQuery, setSearchQuery] = useState(""); // ✅ Include searchQuery here
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header onSearch={(value) => setSearchQuery(value)} />
-      
+      <Header
+        onSearch={(value) => setSearchQuery(value)}
+        onSortChange={(value) => setSortOption(value)}
+      />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
@@ -21,7 +25,10 @@ const App = () => {
           path="/products"
           element={
             <ProtectedRoute>
-              <ProductList searchQuery={searchQuery} />
+              <ProductList
+                searchQuery={searchQuery}
+                sortOption={sortOption}
+              />
             </ProtectedRoute>
           }
         />

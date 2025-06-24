@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-const ProductList = ({ searchQuery = "" }) => {
+const ProductList = ({ searchQuery, sortOption }) => {
   const { token } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,16 +19,34 @@ const ProductList = ({ searchQuery = "" }) => {
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch products", error);
-        setLoading(false);
       }
     };
 
     fetchProducts();
   }, [token]);
 
-  const filteredProducts = products.filter((product) =>
+  const filtered = products.filter((product) =>
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const sorted = [...filtered].sort((a, b) => {
+    switch (sortOption) {
+      case "price-asc":
+        return a.price - b.price;
+      case "price-desc":
+        return b.price - a.price;
+      case "rating-asc":
+        return a.rating - b.rating;
+      case "rating-desc":
+        return b.rating - a.rating;
+      case "name-asc":
+        return a.title.localeCompare(b.title);
+      case "name-desc":
+        return b.title.localeCompare(a.title);
+      default:
+        return 0;
+    }
+  });
 
   if (loading) {
     return (
@@ -44,33 +62,27 @@ const ProductList = ({ searchQuery = "" }) => {
 
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-      {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 w-full"
-          >
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="w-full h-48 object-cover rounded-t-2xl"
-            />
-            <div className="p-4 space-y-2">
-              <h3 className="text-lg font-semibold text-gray-800 truncate">
-                {product.title}
-              </h3>
-              <p className="text-blue-600 font-bold text-lg">${product.price}</p>
-              <p className="text-sm text-yellow-500 font-medium">
-                ⭐ {product.rating}
-              </p>
-            </div>
+      {sorted.map((product) => (
+        <div
+          key={product.id}
+          className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 w-full"
+        >
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="w-full h-48 object-cover rounded-t-2xl"
+          />
+          <div className="p-4 space-y-2">
+            <h3 className="text-lg font-semibold text-gray-800 truncate">
+              {product.title}
+            </h3>
+            <p className="text-blue-600 font-bold text-lg">${product.price}</p>
+            <p className="text-sm text-yellow-500 font-medium">
+              ⭐ {product.rating}
+            </p>
           </div>
-        ))
-      ) : (
-        <p className="col-span-full text-center text-gray-500">
-          No products found.
-        </p>
-      )}
+        </div>
+      ))}
     </div>
   );
 };
