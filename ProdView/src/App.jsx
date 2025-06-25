@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import ProductList from "./pages/Products";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./routes/routes";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ToastContainer position="top-center"/>
       <Header
         onSearch={(value) => setSearchQuery(value)}
         onSortChange={(value) => setSortOption(value)}
@@ -25,10 +27,7 @@ const App = () => {
           path="/products"
           element={
             <ProtectedRoute>
-              <ProductList
-                searchQuery={searchQuery}
-                sortOption={sortOption}
-              />
+              <ProductList searchQuery={searchQuery} sortOption={sortOption} />
             </ProtectedRoute>
           }
         />

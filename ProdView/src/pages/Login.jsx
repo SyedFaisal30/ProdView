@@ -2,36 +2,37 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; 
 
 const Login = () => {
   const [username, setUsername] = useState("emilys");
   const [password, setPassword] = useState("emilyspass");
   const [error, setError] = useState("");
+
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError("");
+    e.preventDefault();
+    setError("");
 
-  try {
-    const res = await axios.post(`${import.meta.env.VITE_API}/auth/login`, {
-      username,
-      password,
-    });
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API}/auth/login`, {
+        username,
+        password,
+      });
 
-    const userData = res.data;
+      const userData = res.data;
+      localStorage.setItem("user", JSON.stringify(userData));
+      login(userData.accessToken);
 
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    login(userData.accessToken);
-
-    navigate("/products");
-  } catch (err) {
-    console.error("Login failed:", err.response?.data || err.message);
-    setError("Invalid credentials");
-  }
-};
+      toast.success("Login successful!");
+      navigate("/products");
+    } catch (err) {
+      setError("Invalid credentials", err);
+      toast.error("Login failed. Please check your credentials.");
+    }
+  };
 
   return (
     <div className="flex items-center justify-center h-[90vh] bg-gray-100">
