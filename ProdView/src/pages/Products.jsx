@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { BiSearchAlt2, BiSad } from "react-icons/bi";
 
 const ProductList = ({ searchQuery, sortOption }) => {
   const { token } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const ProductList = ({ searchQuery, sortOption }) => {
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch products", error);
+        setLoading(false);
       }
     };
 
@@ -65,6 +67,19 @@ const ProductList = ({ searchQuery, sortOption }) => {
           <span className="w-3 h-3 bg-blue-600 rounded-full animate-bounce [animation-delay:0.1s]"></span>
           <span className="w-3 h-3 bg-blue-600 rounded-full animate-bounce [animation-delay:0.2s]"></span>
         </div>
+      </div>
+    );
+  }
+
+  if (sorted.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-80 text-center px-4">
+        <BiSearchAlt2 className="text-gray-400 w-20 h-20 mb-4" />
+        <h2 className="text-xl font-semibold text-gray-700">No products found</h2>
+        <p className="text-gray-500 mt-1 flex items-center gap-1">
+          <BiSad className="inline-block text-yellow-500" />
+          Try changing your search or filter
+        </p>
       </div>
     );
   }
