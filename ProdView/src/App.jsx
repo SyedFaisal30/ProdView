@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import ProductList from "./pages/Products";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./routes/routes";
