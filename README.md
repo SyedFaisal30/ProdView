@@ -59,6 +59,8 @@ A sleek React.js application that allows users to **log in** using DummyJSON cre
   "username": "kminchelle",
   "password": "0lelplR"
 }
+```
+
 🛠️ Getting Started
 1️⃣ Clone the Repository
 
