@@ -6,6 +6,7 @@ const ProductList = ({ searchQuery, sortOption }) => {
   const { token } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageLoadingMap, setImageLoadingMap] = useState({});
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,6 +49,14 @@ const ProductList = ({ searchQuery, sortOption }) => {
     }
   });
 
+  const handleImageLoad = (id) => {
+    setImageLoadingMap((prev) => ({ ...prev, [id]: false }));
+  };
+
+  const handleImageError = (id) => {
+    setImageLoadingMap((prev) => ({ ...prev, [id]: false }));
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -67,11 +76,23 @@ const ProductList = ({ searchQuery, sortOption }) => {
           key={product.id}
           className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 w-full"
         >
-          <img
-            src={product.thumbnail}
-            alt={product.title}
-            className="w-full h-48 object-cover rounded-t-2xl"
-          />
+          <div className="w-full h-48 bg-gray-100 flex items-center justify-center rounded-t-2xl overflow-hidden relative">
+            {imageLoadingMap[product.id] !== false && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-6 h-6 border-4 border-blue-500 border-dashed rounded-full animate-spin" />
+              </div>
+            )}
+            <img
+              src={product.thumbnail}
+              alt={product.title}
+              onLoad={() => handleImageLoad(product.id)}
+              onError={() => handleImageError(product.id)}
+              className={`w-full h-48 object-cover transition-opacity duration-300 ${
+                imageLoadingMap[product.id] === false ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </div>
+
           <div className="p-4 space-y-2">
             <h3 className="text-lg font-semibold text-gray-800 truncate">
               {product.title}
