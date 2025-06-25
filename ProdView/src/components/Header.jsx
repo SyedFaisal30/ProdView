@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FiSearch, FiX } from "react-icons/fi";
+import logo from "../assets/logo.png";
 
 const Header = ({ onSearch, onSortChange }) => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -23,7 +24,7 @@ const Header = ({ onSearch, onSortChange }) => {
     <header className="bg-white shadow-md px-4 py-3 sticky top-0 z-50">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <img
-          src="src/assets/logo.png"
+          src={logo}
           alt="ProdView Logo"
           className="h-10 sm:h-12 object-contain mx-auto sm:mx-0"
         />
