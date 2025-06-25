@@ -11,7 +11,7 @@ A sleek React.js application that allows users to **log in** using DummyJSON cre
 
 ## 🚀 Live Demo
 
-🔗 [https://prodview.vercel.app](https://prodview.vercel.app) *(replace with your deployment URL)*
+🔗 [https://prodview.vercel.app](https://prod-view.vercel.app/) *(replace with your deployment URL)*
 
 ---
 
