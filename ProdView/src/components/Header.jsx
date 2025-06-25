@@ -22,9 +22,11 @@ const Header = ({ onSearch, onSortChange }) => {
   return (
     <header className="bg-white shadow-md px-4 py-3 sticky top-0 z-50">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <h1 className="text-xl font-bold text-blue-600 text-center sm:text-left">
-          ProdView
-        </h1>
+        <img
+          src="src/assets/logo.png"
+          alt="ProdView Logo"
+          className="h-10 sm:h-12 object-contain mx-auto sm:mx-0"
+        />
 
         {isAuthenticated && (
           <div className="sm:w-[48%] lg:w-[75%] xl:w-[60%] flex flex-wrap gap-2 box-border justify-between">

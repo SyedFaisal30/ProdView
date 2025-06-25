@@ -26,26 +26,25 @@ export const AuthProvider = ({ children }) => {
     }, 60 * 1000);
 
     return () => clearInterval(interval);
-  }, [token, logout]);
+  }, [token]);
 
   const login = (newToken) => {
     localStorage.setItem("token", newToken);
     setToken(newToken);
     toast.success("Login successful!");
 
-    // Auto remove token after 1 min (for testing)
     setTimeout(() => {
       localStorage.removeItem("token");
     }, 60 * 1000);
   };
 
-  const logout = ((msg = "Logged out successfully.") => {
+  const logout = (msg = "Logged out successfully.") => {
     localStorage.removeItem("token");
     setToken(null);
     setIsAuthenticated(false);
     toast.info(msg);
     navigate("/");
-  },[navigate]);
+  };
 
   return (
     <AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>
