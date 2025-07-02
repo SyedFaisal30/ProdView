@@ -1,4 +1,11 @@
-import { FaGithub, FaXTwitter, FaWhatsapp, FaLinkedin, FaEnvelope } from "react-icons/fa6";
+import {
+  FaGithub,
+  FaXTwitter,
+  FaWhatsapp,
+  FaLinkedin,
+  FaEnvelope,
+  FaGlobe,
+} from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -46,6 +53,15 @@ const Footer = () => {
           className="hover:text-blue-800 transition-colors duration-300"
         >
           <FaEnvelope />
+        </a>
+        <a
+          href="https://syedfaisal30.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Portfolio"
+          className="hover:text-blue-800 transition-colors duration-300"
+        >
+          <FaGlobe />
         </a>
       </div>
 
